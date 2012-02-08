@@ -1,0 +1,57 @@
+#!/bin/bash
+#
+# Test DNS forward- and reverse-mapping
+# I know I got the idea for this somewhere else but
+# I can't remember where.  If someone knows please let me
+# know so I give credit.
+# Chris Murphy
+
+txtred='\e[0;31m' # Red
+txtgrn='\e[0;32m' # Green
+txtylw='\e[0;33m' # Yellow
+txtblu='\e[0;34m' # Blue
+txtpur='\e[0;35m' # Purple
+txtcyn='\e[0;36m' # Cyan
+txtwht='\e[0;37m' # White
+
+DIG_CMD=`host -l $1 2>/dev/null | cut -d " " -f1`
+
+function show_usage {
+    echo "This requires that you can query recursively eg. dig axfr <zone>, or host -l <zone>"
+    echo "Usage: dns_check_reverse_mapping <zone> eg. google.com"
+    exit
+}
+
+
+if [ "$1" = "" ]; then
+    show_usage
+fi
+if [ "$1" = "-h" ]; then
+    show_usage
+fi
+if [ "$1" = "--help" ]; then
+    show_usage
+fi
+
+echo
+echo -e "\tname -> address -> name"
+echo '----------------------------------'
+for H in $DIG_CMD; do
+  ADDR=$(dig $H +short)
+  if test -n "$ADDR"; then
+    HOST=$(dig -x $ADDR +short)
+    if test "$H." = "$HOST"; then
+      echo -e "${txtgrn}ok\t$H -> $ADDR -> $HOST"
+    elif test -n "$HOST"; then
+      echo -e "${txtylw}fail\t$H -> $ADDR -> $HOST"
+    else
+      echo -e "${txtred}fail\t$H -> $ADDR -> [unassigned]"
+    fi
+  else
+    echo -e "${txtred}fail\t$H -> [unassigned]"
+  fi
+done 
+
+# Reset the terminal colors
+tput sgr0
+
