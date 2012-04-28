@@ -1,0 +1,28 @@
+#!/usr/bin/perl
+
+use strict;
+
+my $VERSION = '1.05';
+
+#The file that the facts are saved to
+my $CHUCK_SAVE_FILE = $ENV{HOME}.'/.chuck_facts.xml';
+
+#Get the page source and split it into an array
+my $link = "\"http://4q.cc/index.php?pid=atom&person=chuck\"";
+my @page_source = split /<summary>|<\/summary>/, `links -source $link`;
+
+#Get the fact from the page source
+my $fact = $page_source[3];
+
+#No fact determined?  Prepare to pay with pain.
+$fact ||= "No fact was found!  Chuck Norris will likely kill you within minutes via a roundhouse kick to the head.";
+
+print $fact,"\n";
+
+#Write chuck fact to the output file
+open(my $OUT, '>>', $CHUCK_SAVE_FILE) or warn "Could not open $CHUCK_SAVE_FILE for writing: $!\n";
+print $OUT '<fact>',$fact,'</fact>',"\n";
+close $OUT;
+
+#That's all...
+exit 0;
