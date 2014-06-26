@@ -1,18 +1,20 @@
 #!/usr/bin/perl
+# Author Chris Murphy
+# Inspired by Dale Francum
 
 use strict;
 
-my $VERSION = '1.05';
+my $VERSION = '1.06';
 
 #The file that the facts are saved to
 my $CHUCK_SAVE_FILE = $ENV{HOME}.'/.chuck_facts.xml';
 
 #Get the page source and split it into an array
-my $link = "\"http://4q.cc/index.php?pid=atom&person=chuck\"";
-my @page_source = split /<summary>|<\/summary>/, `links -source $link`;
+my $link = "\"http://api.icndb.com/jokes/random?limitTo=[nerdy]\"";
+my @page_source = split /:|,/, `links -source $link`;
 
 #Get the fact from the page source
-my $fact = $page_source[3];
+my $fact = $page_source[6];
 
 #No fact determined?  Prepare to pay with pain.
 $fact ||= "No fact was found!  Chuck Norris will likely kill you within minutes via a roundhouse kick to the head.";
