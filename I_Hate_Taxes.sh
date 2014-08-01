@@ -5,18 +5,19 @@
 # Author: Chris Murphy
 # Date: 2007-02-23
 # Purpose: Failed attempt to fool Benford's law, maybe someday I'll
-#          look at it again, but I'd rather not go to jail.
+#          look at it again, but probably not...
+#          I'd rather not go to jail.
 ####################################################################
 
 function show_usage {
     echo "                  ===========  WARNING ==========="
-    echo "  This script tried to get around Benford's law, but the math fundamentally"
+    echo "  This script tried to get around Benford's law, but the math is fundamentally"
     echo "  flawed so DON'T USE IT (as I never did :) ) because it will actually backfire"
     echo "  and more than likely cause you to get audited by the IRS !!!!!!!!!!!!!!!!!"
     echo ""
     echo "  Usage for the brave and/or stupid:"
     echo "      -h or --help shows this message"
-    echo "      iterations = how many random numbers do you want to have to choose from"
+    echo "      iterations = how many random numbers do you want to choose from"
     echo "      how_many_numbers = what's the largest numbers allowed to be in the pool"
     echo ""
     echo "      ./I_Hate_Taxes.sh <iterations> <how_many_numbers>"
